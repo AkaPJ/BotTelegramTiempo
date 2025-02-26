@@ -1,6 +1,8 @@
 from dotenv import load_dotenv
 import os
 import requests
+from telegram import Bot
+
 
 load_dotenv()
 
@@ -42,4 +44,14 @@ def string_format(weather_data):
     )
     return weather_info
 
-print(string_format(get_weather(41.3887901,2.1589899)))
+def send_message(chat_id,text):
+    bot = Bot(token=TELEGRAM_BOT_TOKEN)
+    bot.send_message(chat_id=chat_id, text=text, parse_mode='Markdown')
+
+if __name__ == '__main__':
+    weather_data = get_weather(-34.6132,-58.3772)
+    if weather_data:
+        weather_info = string_format(weather_data)
+        send_message(TELEGRAM_BOT_TOKEN,weather_info)
+    else:
+        send_message(TELEGRAM_BOT_TOKEN,"No se pudo obtener la información del clima")
