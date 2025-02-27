@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import os
 import requests
 from telegram import Bot
+import datetime
 
 
 load_dotenv()
@@ -26,7 +27,7 @@ def get_weather(lat,long):
 
 def string_format(weather_data):
     # Extraer datos relevantes
-    city = weather_data.get('name', 'ubicación desconocida')
+    city = "El Vedat, Alberic"
     weather = weather_data['weather'][0]['description']
     temp = round(weather_data['main']['temp'], 1)  # Redondear a 1 decimal
     feels_like = round(weather_data['main']['feels_like'], 1)  # Sensación térmica
@@ -40,7 +41,8 @@ def string_format(weather_data):
         f"🌡 Temperatura: {temp}°C\n"
         f"🤔 Sensación térmica: {feels_like}°C\n"
         f"💧 Humedad: {humidity}%\n"
-        f"🌬 Viento: {wind_speed} m/s"
+        f"🌬 Viento: {wind_speed} m/s\n"
+        f"Hora: {datetime.datetime.now().strftime('%H:%M:%S')}\n"
     )
     return weather_info
 
