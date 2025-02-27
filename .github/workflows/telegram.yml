@@ -22,7 +22,7 @@ jobs:
           python-version: '3.11'
 
       - name: Instalar dependencias
-        run: pip install python-telegram-bot python-dotenv
+        run: pip install python-telegram-bot python-dotenv requests
 
       - name: Ejecutar el bot
         env:
