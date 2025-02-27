@@ -1,0 +1,32 @@
+name: Enviar Clima a MeteoVedat
+
+on:
+  schedule:
+    # Ejecuta a las 8:00 AM y 8:00 PM (Hora UTC)
+    - cron: '0 10,22 * * *'
+
+  # Permite ejecutar el workflow manualmente si lo necesitas
+  workflow_dispatch:
+
+jobs:
+  send_weather:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛠️ Descargar el código
+        uses: actions/checkout@v3
+
+      - name: 🐍 Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias
+        run: pip install python-telegram-bot python-dotenv
+
+      - name: Ejecutar el bot
+        env:
+          WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}  
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+        run: python bot.py

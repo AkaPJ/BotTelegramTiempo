@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import os
 import requests
 from telegram import Bot
+import asyncio
 import datetime
 
 
@@ -46,14 +47,15 @@ def string_format(weather_data):
     )
     return weather_info
 
-def send_message(chat_id,text):
-    bot = Bot(token=TELEGRAM_BOT_TOKEN)
-    bot.send_message(chat_id=chat_id, text=text, parse_mode='Markdown')
+CHAT_ID = os.getenv("CHAT_ID")
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
-if __name__ == '__main__':
-    weather_data = get_weather(-34.6132,-58.3772)
-    if weather_data:
-        weather_info = string_format(weather_data)
-        send_message(TELEGRAM_BOT_TOKEN,weather_info)
-    else:
-        send_message(TELEGRAM_BOT_TOKEN,"No se pudo obtener la información del clima")
+async def enviar_clima():
+    bot = Bot(TELEGRAM_BOT_TOKEN)
+    
+    payload = string_format(get_weather(39.1336826,-0.5705442))
+    
+    await bot.send_message(chat_id=CHAT_ID, text=payload, parse_mode='Markdown')
+
+
+asyncio.run(enviar_clima())
