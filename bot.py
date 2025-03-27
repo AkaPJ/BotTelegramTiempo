@@ -34,7 +34,7 @@ def string_format(weather_data):
     feels_like = round(weather_data['main']['feels_like'], 1)  # Sensación térmica
     humidity = weather_data['main']['humidity']  # Humedad
     wind_speed = weather_data['wind']['speed']  # Velocidad del viento
-    wind_speed = wind_speed * 3.6
+    wind_speed = round(wind_speed * 3.6,2)
 
     # Crear el string formateado
     weather_info = (
