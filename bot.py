@@ -4,6 +4,7 @@ import requests
 from telegram import Bot
 import asyncio
 import datetime
+import zoneinfo
 
 
 load_dotenv()
@@ -44,7 +45,7 @@ def string_format(weather_data):
         f"🤔 Sensación térmica: {feels_like}°C\n"
         f"💧 Humedad: {humidity}%\n"
         f"🌬 Viento: {wind_speed} km/h\n"
-        f"Hora: {datetime.datetime.now().strftime('%H:%M:%S')}\n"
+        f"Hora: {datetime.datetime.now(zoneinfo.ZoneInfo('Europe/Madrid')).strftime('%H:%M:%S')}\n"
     )
     return weather_info
 
